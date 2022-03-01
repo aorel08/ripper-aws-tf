@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddos-ripper-deployment
+  labels:
+    app: ddos-ripper
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: ddos-ripper
+  template:
+    metadata:
+      labels:
+        app: ddos-ripper
+    spec:
+      containers:
+        - name: ddos-ripper
+          image: nitupkcuf/ddos-ripper:latest
+          args: ["fishki.net"]
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "1"
+              memory: "200Mi"
+            requests:
+              cpu: "0.5"
+              memory: "100Mi"
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: ddos-ripper-service
+# spec:
+#   type: LoadBalancer
+#   selector:
+#     app: ddos-ripper
+#   ports:
+#     - protocol: TCP
+#       port: 8080
+#       targetPort: 80
+#       #nodePort: 30008
