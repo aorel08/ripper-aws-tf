@@ -32,27 +32,9 @@ kubectl connect to existing eks cluster:
 ```bash
 ~$ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
 ```
-
-Edit ConfigMap of an existing cluster:
-
-```bash
-~$ kubectl edit cm aws-auth -n kube-system
-```
-
-If you want to control what identity you are using, run:
-
-```bash
-~$ aws sts get-caller-identity
-{
-    "UserId": "AIDAXB2O*************",
-    "Account": "**********36",
-    "Arn": "arn:aws:iam::**********36:user/andrey.o"
-}
-```
 ---
 ## Deploy containers
 ```bash
 ~$ kubectl apply -f /path/to/ripper-deployment.yaml
 ```
 working example you can find in deployments directory
-
