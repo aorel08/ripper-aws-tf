@@ -17,10 +17,10 @@ locals {
       asg_min_size           = var.autoscaling_minimum_size_by_az * length(data.aws_availability_zones.available_azs.zone_ids)
       asg_max_size           = var.autoscaling_maximum_size_by_az * length(data.aws_availability_zones.available_azs.zone_ids)
       asg_recreate_on_change = true
+      kubelet_extra_args     = "--node-labels=node.kubernetes.io/lifecycle=normal"
       # override_instance_types = var.asg_instance_types
       # kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot" # use Spot EC2 instances to save some money and scale more
-      kubelet_extra_args            = "--node-labels=node.kubernetes.io/lifecycle=normal"
-      additional_security_group_ids = [aws_security_group.worker_group.id]
+      # additional_security_group_ids = [aws_security_group.worker_group.id]
     },
   ]
 }
@@ -30,7 +30,7 @@ module "eks-cluster" {
   source           = "terraform-aws-modules/eks/aws"
   version          = "17.18.0"
   cluster_name     = var.cluster_name
-  cluster_version  = "1.20"
+  cluster_version  = "1.21"
   write_kubeconfig = true
 
   subnets = module.vpc.private_subnets
