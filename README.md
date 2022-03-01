@@ -1,15 +1,11 @@
-## HOW-TO
-
-```diff
-- (this block is a draft, so may be ignored)
-```
+# HOW-TO
 
 Clone this repo into the suitable for you directory and enter this directory.
 
 Before the very start you'll want to initialize the terraform first:
 
 ```bash
-~$ terraform init
+~$ terraform init -backend-config=backend.tfvars -upgrade
 ```
 
 To create infrastructure from the scratch run:
@@ -48,8 +44,15 @@ If you want to control what identity you are using, run:
 ```bash
 ~$ aws sts get-caller-identity
 {
-    "UserId": "AIDAXB2OY72OEHSGKCIHB",
-    "Account": "484959649436",
-    "Arn": "arn:aws:iam::484959649436:user/andrey.o"
+    "UserId": "AIDAXB2O*************",
+    "Account": "**********36",
+    "Arn": "arn:aws:iam::**********36:user/andrey.o"
 }
 ```
+---
+## Deploy containers
+```bash
+~$ kubectl apply -f /path/to/ripper-deployment.yaml
+```
+working example you can find in deployments directory
+
