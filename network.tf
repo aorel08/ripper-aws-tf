@@ -17,7 +17,7 @@ resource "aws_eip" "nat_gw_elastic_ip" {
 # create VPC using the official AWS module
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.7.0"
+  version = "3.12.0"
 
   name = "${var.cluster_name}"
   cidr = var.main_network_block
