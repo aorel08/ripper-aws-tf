@@ -29,6 +29,7 @@ override.tf.json
 # example: *tfplan*
 *tfplan*
 
+*lock*
 *yaml
 *yml
 *txt
