@@ -1,21 +1,24 @@
+<<<<<<< HEAD
 ---
 
 ## HOW-TO
 
-```diff
-- (this block is a draft, so may be ignored)
-```
+# HOW-TO
+>>>>>>> 668026377c2f8f43ba2fc6fc0ce30753c3610ee5
 
 Clone this repo into the suitable for you directory and enter this directory.
 
 Before the very start you'll want to initialize the terraform first:
 
 ```bash
+<<<<<<< HEAD
 ~$ terraform init
+=======
+~$ terraform init -backend-config=backend.tfvars -upgrade
+>>>>>>> 668026377c2f8f43ba2fc6fc0ce30753c3610ee5
 ```
 
 To create infrastructure from the scratch run:
-*example for staging*
 
 ```bash
 ~$ terraform plan -out=ripper.tfplan
@@ -38,20 +41,11 @@ kubectl connect to existing eks cluster:
 ```bash
 ~$ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
 ```
-
-Edit ConfigMap of an existing cluster:
-
+<<<<<<< HEAD
+---
+## Deploy containers
 ```bash
-~$ kubectl edit cm aws-auth -n kube-system
+~$ kubectl apply -f /path/to/ripper-deployment.yaml
 ```
-
-If you want to control what identity you are using, run:
-
-```bash
-~$ aws sts get-caller-identity
-{
-    "UserId": "AIDAXB2OY72OEHSGKCIHB",
-    "Account": "484959649436",
-    "Arn": "arn:aws:iam::484959649436:user/andrey.o"
-}
-```
+working example you c
+>>>>>>> 668026377c2f8f43ba2fc6fc0ce30753c3610ee5
