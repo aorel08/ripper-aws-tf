@@ -8,14 +8,7 @@ locals {
       groups   = ["system:masters"]
     }
   ]
-  developer_user_map_users = [
-    for developer_user in var.developer_users :
-    {
-      userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${developer_user}"
-      username = developer_user
-      groups   = ["${var.cluster_name}-developers"]
-    }
-  ]
+
   worker_groups_launch_template = [
     {
       name                   = "workernode"
@@ -24,12 +17,10 @@ locals {
       asg_min_size           = var.autoscaling_minimum_size_by_az * length(data.aws_availability_zones.available_azs.zone_ids)
       asg_max_size           = var.autoscaling_maximum_size_by_az * length(data.aws_availability_zones.available_azs.zone_ids)
       asg_recreate_on_change = true
+      kubelet_extra_args     = "--node-labels=node.kubernetes.io/lifecycle=normal"
       # override_instance_types = var.asg_instance_types
       # kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot" # use Spot EC2 instances to save some money and scale more
-      kubelet_extra_args = "--node-labels=node.kubernetes.io/lifecycle=normal"
-      # public_ip                     = true
-      key_name                      = "andrey.o"
-      additional_security_group_ids = [aws_security_group.worker_group.id]
+      # additional_security_group_ids = [aws_security_group.worker_group.id]
     },
   ]
 }
@@ -37,9 +28,9 @@ locals {
 # create EKS cluster
 module "eks-cluster" {
   source           = "terraform-aws-modules/eks/aws"
-  version          = "18.7.2"
-  cluster_name     = "${var.cluster_name}"
-  cluster_version  = "1.20"
+  version          = "17.18.0"
+  cluster_name     = var.cluster_name
+  cluster_version  = "1.21"
   write_kubeconfig = true
 
   subnets = module.vpc.private_subnets
@@ -48,7 +39,7 @@ module "eks-cluster" {
   worker_groups_launch_template = local.worker_groups_launch_template
 
   # map developer & admin ARNs as kubernetes Users
-  map_users = concat(local.admin_user_map_users, local.developer_user_map_users)
+  #map_users = concat(local.admin_user_map_users, local.developer_user_map_users)
 }
 
 # get EKS cluster info to configure Kubernetes and Helm providers

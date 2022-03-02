@@ -17,9 +17,9 @@ resource "aws_eip" "nat_gw_elastic_ip" {
 # create VPC using the official AWS module
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.7.0"
+  version = "3.12.0"
 
-  name = "${var.cluster_name}"
+  name = var.cluster_name
   cidr = var.main_network_block
   azs  = data.aws_availability_zones.available_azs.names
   # azs = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"]
@@ -48,7 +48,7 @@ module "vpc" {
   one_nat_gateway_per_az = true
   enable_dns_hostnames   = true
   reuse_nat_ips          = true
-  external_nat_ip_ids    = "${aws_eip.nat_gw_elastic_ip.*.id}"
+  external_nat_ip_ids    = aws_eip.nat_gw_elastic_ip.*.id
 
   # add VPC/Subnet tags required by EKS
   tags = {

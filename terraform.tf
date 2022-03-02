@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.0.3" # which means ">= 0.12.24" and "< 0.13"
+  required_version = "~> 1.1.3" # which means ">= 0.12.24" and "< 0.13"
   backend "s3" {}
   required_providers {
     aws        = "~> 4.3.0"
